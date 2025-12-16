@@ -1,4 +1,0 @@
-(lang dune 3.20)
-(name pogo)
-(sections (lib .) (bin ../../bin) (doc ../../doc/pogo))
-(files (lib (META dune-package opam)) (bin (pogo)) (doc (README.md)))

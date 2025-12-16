@@ -24,4 +24,16 @@ Press q to quit.
     |} model.cursor
 
 let app = Minttea.app ~init ~update ~view ()
-let () = Minttea.start app ~initial_model
+
+let usage_msg = "pogo <identifier> -a <link>"
+let link = ref ""
+let ident = ref ""
+let speclist =
+    [("-a", Arg.Set_string link, "Link")]
+let anon_fun identifier = 
+    ident := identifier
+
+let () =
+    Arg.parse speclist anon_fun usage_msg;
+    if !link <> "" then (Minttea.start app ~initial_model)
+    else print_endline "test"
