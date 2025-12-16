@@ -1,0 +1,11 @@
+lib: [
+  "_build/install/default/lib/pogo/META"
+  "_build/install/default/lib/pogo/dune-package"
+  "_build/install/default/lib/pogo/opam"
+]
+bin: [
+  "_build/install/default/bin/pogo"
+]
+doc: [
+  "_build/install/default/doc/pogo/README.md"
+]
