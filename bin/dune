@@ -1,4 +1,4 @@
 (executable
- (public_name pogo)
+ (public_name owl)
  (name main)
- (libraries pogo minttea))
+ (libraries owl minttea webbrowser))

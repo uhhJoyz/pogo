@@ -1,6 +1,6 @@
 (lang dune 3.20)
 
-(name pogo)
+(name owl)
 
 (generate_opam_files true)
 
@@ -16,10 +16,10 @@
 (documentation https://url/to/documentation)
 
 (package
- (name pogo)
+ (name owl)
  (synopsis "A short synopsis")
  (description "A longer description")
- (depends ocaml)
+ (depends ocaml webbrowser minttea leaves spices)
  (tags
   ("add topics" "to describe" your project)))
 
