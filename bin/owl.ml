@@ -1,4 +1,4 @@
-let get_default_dir () = "test1.flap"
+let get_default_dir () = "test.flap"
 
 let get_flaps () =
   let partial_map f xs =

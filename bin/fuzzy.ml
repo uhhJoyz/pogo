@@ -5,12 +5,15 @@ open Equiv
 
 (* O(min(n, m)) where n is len of key and m is len of value *)
 let greedy_match key value =
-  let rev s =
-    let l = String.length s in
-    String.init l (fun i -> String.get s (l - i - 1))
+  let rev_seq str =
+    let ind = String.length str - 1 in
+    let rec aux ind () =
+      if ind < 0 then Seq.Nil else Seq.Cons (str.[ind], aux (ind - 1))
+    in
+    aux ind
   in
-  let seqa_f, seqa_r = String.to_seq key, rev key |> String.to_seq in
-  let seqb_f, seqb_r = String.to_seq value, rev value |> String.to_seq in
+  let seqa_f, seqa_r = String.to_seq key, rev_seq key in
+  let seqb_f, seqb_r = String.to_seq value, rev_seq value in
   let rec aux acc p a b =
     if p >= 3
     then acc
