@@ -12,6 +12,11 @@ bug-reports: "https://github.com/username/reponame/issues"
 depends: [
   "dune" {>= "3.20"}
   "ocaml"
+  "webbrowser"
+  "minttea"
+  "leaves"
+  "spices"
+  "re"
   "odoc" {with-doc}
 ]
 build: [
