@@ -59,11 +59,13 @@ let confirm_update force flaps i msg token link token_link_pair =
   else update_and_notify ()
 ;;
 
+let safety_mapping = String.map (fun c -> if c = '|' then 'l' else c)
+
 let do_roost args force =
   let flaps = get_flaps () in
   let token, link =
     let grab i l = List.nth l i in
-    List.rev !args |> fun l -> grab 1 l, grab 2 l
+    List.rev !args |> fun l -> grab 1 l |> safety_mapping, grab 2 l
   in
   Fuzzy.find_best_opt (List.nth (List.rev !args) 1) (Array.map (fun (x, _) -> x) flaps)
   |> function
@@ -144,7 +146,7 @@ let yarp args =
   then Printf.printf "Must supply a token to yarp (owl yarp <token>).\n"
   else (
     let flaps = get_flaps () in
-    let token = List.nth (List.rev !args) 1 in
+    let token = List.nth (List.rev !args) 1 |> safety_mapping in
     Fuzzy.find_best_opt (List.nth (List.rev !args) 1) (Array.map (fun (x, _) -> x) flaps)
     |> function
     | None -> Printf.printf "No match found, nothing yarped.\n"
