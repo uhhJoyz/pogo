@@ -22,15 +22,24 @@ Press q to quit.
 ;;
 
 let app = Minttea.app ~init ~update ~view ()
-let usage_msg = "owl | flap <token>\n    | roost <token> <link>"
+
+let usage_msg =
+  "owl [ flap <token> -- access link\n\
+  \    | roost <token> <link> -- store link\n\
+  \    | yarp <token> -- remove link]\n"
+;;
+
+let force = ref false
 let args = ref []
-let speclist = []
+let speclist = [ "-f", Arg.Set force, "Skip any confirmation prompts." ]
 let anon_fun identifier = args := identifier :: !args
 
 let print_usage () =
   Printf.printf
-    "Must specify whether to flap (find link access point) or roost (redirect or \
-     otherwise store token): \n\
+    "Must specify whether to \n\
+     \t- flap (Find Link Access Point)\n\
+     \t- roost (Redirect Or Otherwise Store Token)\n\
+     \t- yarp (Yoke Adjacent bookmarks and Remove Point) : \n\
      %s"
     usage_msg
 ;;
@@ -44,6 +53,7 @@ let () =
   else (
     match List.nth (List.rev !args) 0 with
     | "flap" -> Owl.flap args
-    | "roost" -> Owl.roost args
+    | "roost" -> Owl.roost args force
+    | "yarp" -> Owl.yarp args
     | _ -> print_usage ())
 ;;

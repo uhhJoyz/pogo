@@ -1,5 +1,6 @@
 open Equiv
 
+(* For Live Variant: *)
 (* Can prune when score is less than half of max found *)
 (* Can prune when 3 characters without progress *)
 
@@ -33,7 +34,7 @@ let greedy_match key value =
 ;;
 
 let find_best_opt key l =
-  List.mapi (fun i v -> i, greedy_match key v) l
-  |> List.fold_left (fun ((_, a) as p1) ((_, b) as p2) -> if a > b then p1 else p2) (0, 0)
+  Array.mapi (fun i v -> i, greedy_match key v) l
+  |> Array.fold_left (fun ((_, a) as p1) ((_, b) as p2) -> if a > b then p1 else p2) (0, 0)
   |> fun (i, v) -> if v <= 0 then None else Some i
 ;;

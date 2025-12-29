@@ -1,4 +1,4 @@
 (executable
  (public_name owl)
  (name main)
- (libraries owl minttea webbrowser))
+ (libraries owl minttea leaves spices webbrowser re))

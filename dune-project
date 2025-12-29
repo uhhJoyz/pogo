@@ -19,7 +19,7 @@
  (name owl)
  (synopsis "A short synopsis")
  (description "A longer description")
- (depends ocaml webbrowser minttea leaves spices)
+ (depends ocaml webbrowser minttea leaves spices re)
  (tags
   ("add topics" "to describe" your project)))
 
