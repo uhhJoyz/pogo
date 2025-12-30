@@ -1,3 +1,10 @@
+let home_dir () =
+  try Sys.getenv "XDG_GET_CONFIG_HOME" with
+  | Not_found ->
+    (try Filename.concat (Sys.getenv "HOME") ".config" with
+     | Not_found -> raise (Sys_error "Failed to locate config dir."))
+;;
+
 let write file str =
   let oc = open_out file in
   Printf.fprintf oc "%s" str;
