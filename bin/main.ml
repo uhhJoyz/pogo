@@ -30,8 +30,15 @@ let usage_msg =
 ;;
 
 let force = ref false
+let interactive = ref false
 let args = ref []
-let speclist = [ "-f", Arg.Set force, "Skip any confirmation prompts." ]
+
+let speclist =
+  [ "-f", Arg.Set force, "Skip any confirmation prompts."
+  ; "-i", Arg.Set interactive, "Enter interactive mode."
+  ]
+;;
+
 let anon_fun identifier = args := identifier :: !args
 
 let print_usage () =
@@ -45,10 +52,11 @@ let print_usage () =
 ;;
 
 let () =
+  Owl.ensure_default_dir ();
   Arg.parse speclist anon_fun usage_msg;
   if List.length !args <= 0
   then print_usage ()
-  else if List.length !args = 1
+  else if !interactive
   then Minttea.start app ~initial_model
   else (
     match List.nth (List.rev !args) 0 with

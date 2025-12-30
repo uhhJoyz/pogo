@@ -1,4 +1,14 @@
-let get_default_dir () = "test1.flap"
+let ensure_default_dir () =
+  let cfg_dir = Filename.concat (File.home_dir ()) "owl-link" in
+  let () = if not (Sys.file_exists cfg_dir) then Sys.mkdir cfg_dir 0o777 in
+  let cfg_file = Filename.concat cfg_dir "flaps" in
+  if not (Sys.file_exists cfg_file) then File.write cfg_file ""
+;;
+
+let get_default_dir () =
+  let cfg_dir = Filename.concat (File.home_dir ()) "owl-link" in
+  Filename.concat cfg_dir "flaps"
+;;
 
 let get_flaps () =
   let partial_map f xs =
