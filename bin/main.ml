@@ -48,7 +48,7 @@ let print_usage () =
      \t- flap (Find Link Access Point)\n\
      \t- roost (Redirect Or Otherwise Store Token)\n\
      \t- yarp (Yoke Adjacent bookmarks and Remove Point)
-     \t- preen (show flaps) : \n\
+     \t- preen (preview related existing entries now) : \n\
      %s"
     usage_msg
 ;;
