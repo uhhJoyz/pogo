@@ -38,3 +38,12 @@ let find_best_opt key l =
   |> Array.fold_left (fun ((_, a) as p1) ((_, b) as p2) -> if a > b then p1 else p2) (0, 0)
   |> fun (i, v) -> if v <= 0 then None else Some i
 ;;
+
+let find_all_matching_opt key l =
+  Array.mapi (fun i v -> i, greedy_match key v) l
+  |> Array.fold_left (fun acc ((_, b) as p2) -> if b > 0 then p2 :: acc else acc) [] 
+  |> List.fast_sort (fun (_, a) (_, b) -> compare a b)
+  |> function
+    | [] -> None
+    | x -> Some (List.map (fun (i, _) -> l.(i)) x)
+;;

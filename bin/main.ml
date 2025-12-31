@@ -63,5 +63,6 @@ let () =
     | "flap" -> Owl.flap args
     | "roost" -> Owl.roost args force
     | "yarp" -> Owl.yarp args
+    | "preen" -> Owl.preen args
     | _ -> print_usage ())
 ;;
