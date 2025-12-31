@@ -46,7 +46,8 @@ let print_usage () =
     "Must specify whether to \n\
      \t- flap (Find Link Access Point)\n\
      \t- roost (Redirect Or Otherwise Store Token)\n\
-     \t- yarp (Yoke Adjacent bookmarks and Remove Point) : \n\
+     \t- yarp (Yoke Adjacent bookmarks and Remove Point)
+     \t- preen (show flaps) : \n\
      %s"
     usage_msg
 ;;
