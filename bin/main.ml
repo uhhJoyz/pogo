@@ -26,7 +26,8 @@ let app = Minttea.app ~init ~update ~view ()
 let usage_msg =
   "owl [ flap <token> -- access link\n\
   \    | roost <token> <link> -- store link\n\
-  \    | yarp <token> -- remove link]\n"
+  \    | yarp <token> -- remove link]\n
+  \    | preen <optional:token> -- show all links (or similar ones)]\n"
 ;;
 
 let force = ref false
