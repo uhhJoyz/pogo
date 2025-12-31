@@ -26,7 +26,8 @@ let app = Minttea.app ~init ~update ~view ()
 let usage_msg =
   "owl [ flap <token> -- access link\n\
   \    | roost <token> <link> -- store link\n\
-  \    | yarp <token> -- remove link]\n"
+  \    | yarp <token> -- remove link]\n
+  \    | preen <optional:token> -- show all links (or similar ones)]\n"
 ;;
 
 let force = ref false
@@ -46,7 +47,8 @@ let print_usage () =
     "Must specify whether to \n\
      \t- flap (Find Link Access Point)\n\
      \t- roost (Redirect Or Otherwise Store Token)\n\
-     \t- yarp (Yoke Adjacent bookmarks and Remove Point) : \n\
+     \t- yarp (Yoke Adjacent bookmarks and Remove Point)
+     \t- preen (preview related existing entries now) : \n\
      %s"
     usage_msg
 ;;
@@ -63,5 +65,6 @@ let () =
     | "flap" -> Owl.flap args
     | "roost" -> Owl.roost args force
     | "yarp" -> Owl.yarp args
+    | "preen" -> Owl.preen args
     | _ -> print_usage ())
 ;;
