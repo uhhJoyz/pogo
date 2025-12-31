@@ -44,12 +44,13 @@ let serialize_mappings flaps =
   String.concat "\n" (List.map (fun (x, y) -> x ^ "|" ^ y) (Array.to_list flaps))
 ;;
 
-let confirm_update force flaps i msg token link token_link_pair =
+let confirm_update force flaps i msg noti token link token_link_pair =
   let update_and_notify () =
     flaps.(i) <- token, link;
     serialize_mappings flaps |> File.write (get_default_dir ());
     Printf.printf
-      "Updated (%s, %s) -> (%s, %s)\n"
+      "%s (%s, %s) -> (%s, %s)\n"
+      noti
       (fst token_link_pair)
       (snd token_link_pair)
       token
@@ -69,13 +70,13 @@ let confirm_update force flaps i msg token link token_link_pair =
   else update_and_notify ()
 ;;
 
-let safety_mapping = String.map (fun c -> if c = '|' then 'l' else c)
+let token_safety_check = String.map (fun c -> if c = '|' then 'l' else c)
 
 let do_roost args force =
   let flaps = get_flaps () in
   let token, link =
     let grab i l = List.nth l i in
-    List.rev !args |> fun l -> grab 1 l |> safety_mapping, grab 2 l
+    List.rev !args |> fun l -> grab 1 l |> token_safety_check, grab 2 l
   in
   Fuzzy.find_best_opt (List.nth (List.rev !args) 1) (Array.map (fun (x, _) -> x) flaps)
   |> function
@@ -89,18 +90,20 @@ let do_roost args force =
         flaps
         i
         "Found a matching token - would you like to update it? (y/n)\n"
+        "Updated"
         token
         link
         token_link_pair
     else
       confirm_update
         !force
-        flaps
-        i
-        (Format.sprintf "Found %s, which was a near match. Update? (y/n)\n" token)
+        (Array.append flaps ([|("", "")|]))
+        (Array.length flaps)
+        (Format.sprintf "Found %s, which was a near match.\nWould you still like to create a new flap? (y/n)\n" (fst token_link_pair))
+        "Created"
         token
         link
-        token_link_pair
+        (token, link)
 ;;
 
 let find_link_opt = function
@@ -156,7 +159,7 @@ let yarp args =
   then Printf.printf "Must supply a token to yarp (owl yarp <token>).\n"
   else (
     let flaps = get_flaps () in
-    let token = List.nth (List.rev !args) 1 |> safety_mapping in
+    let token = List.nth (List.rev !args) 1 |> token_safety_check in
     Fuzzy.find_best_opt (List.nth (List.rev !args) 1) (Array.map (fun (x, _) -> x) flaps)
     |> function
     | None -> Printf.printf "No match found, nothing yarped.\n"
