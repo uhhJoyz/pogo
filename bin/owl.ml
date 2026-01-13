@@ -97,9 +97,12 @@ let do_roost args force =
     else
       confirm_update
         !force
-        (Array.append flaps ([|("", "")|]))
+        (Array.append flaps [| "", "" |])
         (Array.length flaps)
-        (Format.sprintf "Found %s, which was a near match.\nWould you still like to create a new flap? (y/n)\n" (fst token_link_pair))
+        (Format.sprintf
+           "Found %s, which was a near match.\n\
+            Would you still like to create a new flap? (y/n)\n"
+           (fst token_link_pair))
         "Created"
         token
         link
@@ -180,11 +183,17 @@ let yarp args =
           (snd token_link_pair))
 ;;
 
-let preen args = 
-  if List.length !args < 2 then
-  Array.iter (fun (k, _) -> Printf.printf "%s\n" k) (get_flaps ())
-  else
-  match Fuzzy.find_all_matching_opt (List.nth (List.rev !args) 1) (get_flaps () |> Array.map (fun (k, _) -> k)) with
-  | None -> Printf.printf "No matching flaps found.\n"
-  | Some l -> Printf.printf "Flaps found in order of increasing similarity:\n"; List.iter (Printf.printf "%s\n") l
+let preen args =
+  if List.length !args < 2
+  then Array.iter (fun (k, _) -> Printf.printf "%s\n" k) (get_flaps ())
+  else (
+    match
+      Fuzzy.find_all_matching_opt
+        (List.nth (List.rev !args) 1)
+        (get_flaps () |> Array.map (fun (k, _) -> k))
+    with
+    | None -> Printf.printf "No matching flaps found.\n"
+    | Some l ->
+      Printf.printf "Flaps found in order of increasing similarity:\n";
+      List.iter (Printf.printf "%s\n") l)
 ;;
